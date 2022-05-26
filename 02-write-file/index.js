@@ -1,22 +1,26 @@
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
-const process = require('process');
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
-function inter() {
-output.write('Введите текст:\n')
-const output = fs.createWriteStream(path.join(__dirname, 'note.txt', text, (error)=> {
-  const text = Text.stringify(notes);
-  fs.writeFile('note.txt', text, (error) => {
-    if (error) return console.error(error.message);
-    console.log('Заметка создана');
-  });
-}))
-return stdout.write('Пока')
+const streamRead = fs.createReadStream(path.join(__dirname, 'note.txt'), 'utf-8');
+const stream = fs.createWriteStream(path.join(__dirname, 'note.txt'));
+let greeting = 'Write your text here:\n'
+function writeText () {
+    rl.question ( greeting, answer => {
+        if (answer === 'exit') {
+            rl.close();
+        } else {
+            stream.write(answer + '\n');
+            greeting = '';
+            writeText();
+        }
+    })
 };
-inter();
+fs.promises.writeFile((path.join(__dirname, 'note.txt')), '');
+writeText();
+rl.on('close', ()=> rl.output.write('See you soon!'));
 
 
